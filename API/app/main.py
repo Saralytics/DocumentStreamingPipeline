@@ -1,4 +1,5 @@
 # You need this to use FastAPI, work with statuses and be able to end HTTPExceptions
+from sys import api_version
 from fastapi import FastAPI, status, HTTPException
  
 # You need this to be able to turn classes into JSONs and return
@@ -72,7 +73,8 @@ async def post_invoice_item(item: InvoiceItem): #body awaits a json with invoice
 
 def produce_kafka_string(json_as_string):
     # Create producer
-        producer = KafkaProducer(bootstrap_servers='kafka:9092',acks=1)
+        producer = KafkaProducer(bootstrap_servers='kafka:9092',acks=1, api_version=(0,10,2))
         
         # Write the string as bytes because Kafka needs it this way
         producer.send('ingestion-topic', bytes(json_as_string, 'utf-8'))
+        producer.flush()

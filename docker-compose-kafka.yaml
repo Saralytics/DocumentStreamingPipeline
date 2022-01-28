@@ -9,7 +9,8 @@ services:
   kafka:
     image: 'bitnami/kafka:latest'
     ports:
-      - '9093:9093'          #change to 9093 to access external from your host
+      - '9092:9092'          
+      - '9093:9093'               #expose 9093 to access externally from your host
     environment:
       - KAFKA_BROKER_ID=1
       - KAFKA_CFG_ZOOKEEPER_CONNECT=zookeeper:2181
